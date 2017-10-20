@@ -1,7 +1,6 @@
 package com.ldg.pattern.adapter.lianxi;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
 

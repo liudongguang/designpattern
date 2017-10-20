@@ -7,6 +7,9 @@ import com.ldg.pattern.adapter.lianxi.FileProperties;
 import com.ldg.pattern.iterator.api.Iterator;
 import com.ldg.pattern.iterator.impl.Book;
 import com.ldg.pattern.iterator.impl.BookShelf;
+import com.ldg.pattern.templatemethod.AbstractDisplay;
+import com.ldg.pattern.templatemethod.CharDisplay;
+import com.ldg.pattern.templatemethod.StringDisplay;
 import org.junit.Test;
 
 /**
@@ -30,6 +33,9 @@ public class PatternTest {
         }
     }
 
+    /**
+     * 适配器模式
+     */
     @Test
     public void testAdapter() {
         //继承的方式
@@ -59,4 +65,16 @@ public class PatternTest {
 
     }
 
+    /**
+     * 模版方法模式
+     */
+    @Test
+    public void testTemplateMethod() {
+        AbstractDisplay abstractDisplay1=new CharDisplay('H');
+        AbstractDisplay abstractDisplay2=new StringDisplay("Hello,world");
+        AbstractDisplay abstractDisplay3=new StringDisplay("你好世界！");
+        abstractDisplay1.display();
+        abstractDisplay2.display();
+        abstractDisplay3.display();
+    }
 }
