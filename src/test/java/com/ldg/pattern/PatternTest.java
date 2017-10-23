@@ -4,9 +4,13 @@ import com.ldg.pattern.adapter.classadapter.Print;
 import com.ldg.pattern.adapter.classadapter.PrintBanner;
 import com.ldg.pattern.adapter.lianxi.FileIO;
 import com.ldg.pattern.adapter.lianxi.FileProperties;
+import com.ldg.pattern.factorymethod.api.Factory;
+import com.ldg.pattern.factorymethod.api.Product;
+import com.ldg.pattern.factorymethod.impl.IDCardFactory;
 import com.ldg.pattern.iterator.api.Iterator;
 import com.ldg.pattern.iterator.impl.Book;
 import com.ldg.pattern.iterator.impl.BookShelf;
+import com.ldg.pattern.singleton.Singleton;
 import com.ldg.pattern.templatemethod.AbstractDisplay;
 import com.ldg.pattern.templatemethod.CharDisplay;
 import com.ldg.pattern.templatemethod.StringDisplay;
@@ -17,7 +21,7 @@ import org.junit.Test;
  */
 public class PatternTest {
     /**
-     * Iterator迭代器模式
+     * 1.Iterator迭代器模式
      */
     @Test
     public void testIterator() {
@@ -34,7 +38,7 @@ public class PatternTest {
     }
 
     /**
-     * 适配器模式
+     * 2.适配器模式
      */
     @Test
     public void testAdapter() {
@@ -66,15 +70,38 @@ public class PatternTest {
     }
 
     /**
-     * 模版方法模式
+     * 3.模版方法模式
      */
     @Test
     public void testTemplateMethod() {
-        AbstractDisplay abstractDisplay1=new CharDisplay('H');
-        AbstractDisplay abstractDisplay2=new StringDisplay("Hello,world");
-        AbstractDisplay abstractDisplay3=new StringDisplay("你好世界！");
+        AbstractDisplay abstractDisplay1 = new CharDisplay('H');
+        AbstractDisplay abstractDisplay2 = new StringDisplay("Hello,world");
+        AbstractDisplay abstractDisplay3 = new StringDisplay("你好世界！");
         abstractDisplay1.display();
         abstractDisplay2.display();
         abstractDisplay3.display();
+    }
+    /**
+     * 4.工厂方法模式
+     */
+    @Test
+    public void testFactoryMethod() {
+        Factory factory=new IDCardFactory();
+        Product card1=factory.create("小明");
+        Product card2=factory.create("小红");
+        Product card3=factory.create("小刚");
+        card1.use();
+        card2.use();
+        card3.use();
+        System.out.println(((IDCardFactory)factory).getOwners());
+    }
+    /**
+     * 5.Singleton 模式
+     */
+    @Test
+    public void testSingleton() {
+       Singleton s1=Singleton.getInstance();
+       Singleton s2=Singleton.getInstance();
+        System.out.println(s1==s2);
     }
 }
