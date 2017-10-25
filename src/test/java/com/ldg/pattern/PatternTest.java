@@ -1,5 +1,8 @@
 package com.ldg.pattern;
 
+import com.ldg.pattern.AbstractFactory.factory.Link;
+import com.ldg.pattern.AbstractFactory.factory.Page;
+import com.ldg.pattern.AbstractFactory.factory.Tray;
 import com.ldg.pattern.adapter.classadapter.Print;
 import com.ldg.pattern.adapter.classadapter.PrintBanner;
 import com.ldg.pattern.adapter.lianxi.FileIO;
@@ -88,66 +91,103 @@ public class PatternTest {
         abstractDisplay2.display();
         abstractDisplay3.display();
     }
+
     /**
      * 4.工厂方法模式
      */
     @Test
     public void testFactoryMethod() {
-        Factory factory=new IDCardFactory();
-        Product card1=factory.create("小明");
-        Product card2=factory.create("小红");
-        Product card3=factory.create("小刚");
+        Factory factory = new IDCardFactory();
+        Product card1 = factory.create("小明");
+        Product card2 = factory.create("小红");
+        Product card3 = factory.create("小刚");
         card1.use();
         card2.use();
         card3.use();
-        System.out.println(((IDCardFactory)factory).getOwners());
+        System.out.println(((IDCardFactory) factory).getOwners());
     }
+
     /**
      * 5.Singleton 模式
      */
     @Test
     public void testSingleton() {
-       Singleton s1=Singleton.getInstance();
-       Singleton s2=Singleton.getInstance();
-        System.out.println(s1==s2);
+        Singleton s1 = Singleton.getInstance();
+        Singleton s2 = Singleton.getInstance();
+        System.out.println(s1 == s2);
     }
+
     /**
      * 6.prototype 模式
      */
     @Test
     public void testPrototype() {
         //准备
-        Manager manager=new Manager();
-        UnderlinePen upen=new UnderlinePen('~');
-        MessageBox mbox=new MessageBox('*');
-        MessageBox sbox=new MessageBox('/');
-        manager.register("下划线",upen);
-        manager.register("星号线",mbox);
-        manager.register("斜线",sbox);
+        Manager manager = new Manager();
+        UnderlinePen upen = new UnderlinePen('~');
+        MessageBox mbox = new MessageBox('*');
+        MessageBox sbox = new MessageBox('/');
+        manager.register("下划线", upen);
+        manager.register("星号线", mbox);
+        manager.register("斜线", sbox);
         ///生成
-        com.ldg.pattern.prototype.Product p1=manager.create("下划线");
-        com.ldg.pattern.prototype.Product p2=manager.create("星号线");
-        com.ldg.pattern.prototype.Product p3=manager.create("斜线");
+        com.ldg.pattern.prototype.Product p1 = manager.create("下划线");
+        com.ldg.pattern.prototype.Product p2 = manager.create("星号线");
+        com.ldg.pattern.prototype.Product p3 = manager.create("斜线");
         p1.use("你好世界！");
         p2.use("你好世界！");
         p3.use("你好世界！");
     }
+
     /**
      * 7.builder 模式
-     *
      */
     @Test
     public void testBuilder() {
-        TextBuilder textBuilder=new TextBuilder();
-        Director director=new Director(textBuilder);
+        TextBuilder textBuilder = new TextBuilder();
+        Director director = new Director(textBuilder);
         director.construct();
-        String result=textBuilder.getResult();
+        String result = textBuilder.getResult();
         System.out.println(result);
         /////
-        HTMLBuilder htmlBuilder=new HTMLBuilder();
-        Director director2=new Director(htmlBuilder);
+        HTMLBuilder htmlBuilder = new HTMLBuilder();
+        Director director2 = new Director(htmlBuilder);
         director2.construct();
-        String result2=htmlBuilder.getResult();
+        String result2 = htmlBuilder.getResult();
         System.out.println(result2);
+    }
+
+    /**
+     * 8.AbstractFactory 抽象工厂模式
+     */
+    @Test
+    public void testAbstractFactory() {
+        //com.ldg.pattern.AbstractFactory.factory.Factory factory = com.ldg.pattern.AbstractFactory.factory.Factory.getFactory("com.ldg.pattern.AbstractFactory.listfactory.ListFactory");
+        com.ldg.pattern.AbstractFactory.factory.Factory factory = com.ldg.pattern.AbstractFactory.factory.Factory.getFactory("com.ldg.pattern.AbstractFactory.tablefactory.TableFactory");
+        Link people = factory.createLink("人民日报", "http://www.people.com.cn/");
+        Link gmw = factory.createLink("光明日报", "http://www.gmw.cn/");
+
+        Link us_yahoo = factory.createLink("雅虎us", "http://www.yahoo.com/");
+        Link jp_yahoo = factory.createLink("雅虎 日本", "http://www.yahoo.jp/");
+        Link excite = factory.createLink("Excite", "http://www.excite.com/");
+        Link google = factory.createLink("Google", "http://www.google.com/");
+
+        Tray traynews = factory.createTray("日报");
+        traynews.add(people);
+        traynews.add(gmw);
+        //
+        Tray trayYahoo = factory.createTray("Yahoo！");
+        trayYahoo.add(us_yahoo);
+        trayYahoo.add(jp_yahoo);
+        //
+        Tray traysearch = factory.createTray("检索引擎");
+        traysearch.add(trayYahoo);
+        traysearch.add(excite);
+        traysearch.add(google);
+        //
+        Page page = factory.createPage("LinkPage", "杨文轩");
+        page.add(traynews);
+        page.add(traysearch);
+        page.output();
     }
 }
