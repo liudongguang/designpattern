@@ -4,12 +4,19 @@ import com.ldg.pattern.adapter.classadapter.Print;
 import com.ldg.pattern.adapter.classadapter.PrintBanner;
 import com.ldg.pattern.adapter.lianxi.FileIO;
 import com.ldg.pattern.adapter.lianxi.FileProperties;
+import com.ldg.pattern.builder.Builder;
+import com.ldg.pattern.builder.Director;
+import com.ldg.pattern.builder.HTMLBuilder;
+import com.ldg.pattern.builder.TextBuilder;
 import com.ldg.pattern.factorymethod.api.Factory;
 import com.ldg.pattern.factorymethod.api.Product;
 import com.ldg.pattern.factorymethod.impl.IDCardFactory;
 import com.ldg.pattern.iterator.api.Iterator;
 import com.ldg.pattern.iterator.impl.Book;
 import com.ldg.pattern.iterator.impl.BookShelf;
+import com.ldg.pattern.prototype.Manager;
+import com.ldg.pattern.prototype.MessageBox;
+import com.ldg.pattern.prototype.UnderlinePen;
 import com.ldg.pattern.singleton.Singleton;
 import com.ldg.pattern.templatemethod.AbstractDisplay;
 import com.ldg.pattern.templatemethod.CharDisplay;
@@ -103,5 +110,44 @@ public class PatternTest {
        Singleton s1=Singleton.getInstance();
        Singleton s2=Singleton.getInstance();
         System.out.println(s1==s2);
+    }
+    /**
+     * 6.prototype 模式
+     */
+    @Test
+    public void testPrototype() {
+        //准备
+        Manager manager=new Manager();
+        UnderlinePen upen=new UnderlinePen('~');
+        MessageBox mbox=new MessageBox('*');
+        MessageBox sbox=new MessageBox('/');
+        manager.register("下划线",upen);
+        manager.register("星号线",mbox);
+        manager.register("斜线",sbox);
+        ///生成
+        com.ldg.pattern.prototype.Product p1=manager.create("下划线");
+        com.ldg.pattern.prototype.Product p2=manager.create("星号线");
+        com.ldg.pattern.prototype.Product p3=manager.create("斜线");
+        p1.use("你好世界！");
+        p2.use("你好世界！");
+        p3.use("你好世界！");
+    }
+    /**
+     * 7.builder 模式
+     *
+     */
+    @Test
+    public void testBuilder() {
+        TextBuilder textBuilder=new TextBuilder();
+        Director director=new Director(textBuilder);
+        director.construct();
+        String result=textBuilder.getResult();
+        System.out.println(result);
+        /////
+        HTMLBuilder htmlBuilder=new HTMLBuilder();
+        Director director2=new Director(htmlBuilder);
+        director2.construct();
+        String result2=htmlBuilder.getResult();
+        System.out.println(result2);
     }
 }

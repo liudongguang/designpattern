@@ -6,6 +6,7 @@ import com.ldg.pattern.adapter.Banner;
  * Created by LiuDongguang on 2017/10/20.
  *
  * 适配器
+ * 3
  */
 public class PrintBanner extends Banner implements Print {
 

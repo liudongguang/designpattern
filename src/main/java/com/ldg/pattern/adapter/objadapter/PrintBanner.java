@@ -4,6 +4,7 @@ import com.ldg.pattern.adapter.Banner;
 
 /**
  * Created by LiuDongguang on 2017/10/20.
+ * 3
  */
 public class PrintBanner extends Print {
     private Banner banner;
